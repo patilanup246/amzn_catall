@@ -34,14 +34,14 @@ def parsehtml(url):
 
 def main():
     timenow = str(datetime.utcnow().strftime('%Y%m%d%H%M%S%f')[:-3])
-    file_name = 'amazon_best_seller_' + timenow + '.csv'
+    file_name = 'amazon_new_releases_' + timenow + '.csv'
 
     dfObj = pd.DataFrame(
         columns=['select', 'amazon_url', 'cat1', 'cat2', 'cat3', 'cat4', 'cat5', 'cat6', 'cat7', 'cat8'])
     dfObj.to_csv(file_name)
     _pgn = 0
 
-    ebay_main_url_count = "https://www.amazon.com/Best-Sellers/zgbs"
+    ebay_main_url_count = "https://www.amazon.com/gp/new-releases/ref=zg_bs_tab"
     alllist = parsehtml(ebay_main_url_count)
     select = ''
     amazon_url = ''
