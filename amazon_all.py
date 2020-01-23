@@ -5,24 +5,23 @@ import json
 from datetime import datetime
 import random
 import re
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-import time
-
-options = Options()
-options.add_argument('--headless')
-options.add_argument('--disable-gpu')  # Last I checked this was necessary.
+# from selenium import webdriver
+# from selenium.webdriver.chrome.options import Options
+# import time
+#
+# options = Options()
+# options.add_argument('--headless')
+# options.add_argument('--disable-gpu')  # Last I checked this was necessary.
 
 
 def parsehtml(url):
     try:
-        time.sleep(2)
-        executable_path = "chromedriver"
-        browser = webdriver.Chrome(executable_path=executable_path, chrome_options=options)
-        browser.get(url)
-        # result_count = requests.get(url)
-        # ebay_page_count = result_count.content
-        ebay_page_count = browser.page_source
+        # executable_path = "chromedriver"
+        # browser = webdriver.Chrome(executable_path=executable_path, chrome_options=options)
+        # browser.get(url)
+        result_count = requests.get(url)
+        ebay_page_count = result_count.content
+        #ebay_page_count = browser.page_source
         soup_count = BeautifulSoup(ebay_page_count, 'html.parser')
         zg_browseRoot = soup_count.findAll('ul', {'id': 'zg_browseRoot'})[0]
         try:
@@ -44,14 +43,13 @@ def parsehtml(url):
             pass
     except Exception as e:
         print(url)
-        time.sleep(300)
         alllist = []
         pass
     return alllist
 
 
 def main():
-    fruits = ["new-releases", "movers-and-shakers", "most-wished-for", "most-gifted"]
+    fruits = ["movers-and-shakers", "most-wished-for", "most-gifted","new-releases"]
     for x in fruits:
         fnme = x.replace('-', '')
         timenow = str(datetime.utcnow().strftime('%Y%m%d%H%M%S%f')[:-3])
